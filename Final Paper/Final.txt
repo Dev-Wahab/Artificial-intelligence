@@ -1,0 +1,33 @@
+def dfs(graph, node, visited=[]):
+    visited.append(node)
+    for child in graph[node]:
+        if child not in visited:
+            dfs(graph, child, visited)
+    print(node, end=" ")
+           
+
+    return visited
+	
+	
+def find_path(graph,start,end,path=[]):
+    path=path+[start]
+    if start==end:
+        return [path]
+    for node in graph[start]:
+        if node not in path:
+            newpath=find_path(graph,node,end,path)
+            if newpath:
+                return newpath
+    return None
+	
+
+def costcal(graph, path):
+    cost = 0
+    for i in range(len(path)-1):
+        if path[i+1] not in graph[path[i]]:
+            return "Invalid Path"
+        else:
+            cost += graph[path[i]][path[i+1]]
+    return cost
+	
+
