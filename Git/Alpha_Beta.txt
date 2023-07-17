@@ -1,0 +1,60 @@
+class Game:
+ def __init__(self, state):
+ self.state = state
+ def generate_moves(self):
+ # Generate all possible moves from the current state
+ pass
+ def is_terminal_state(self):
+ # Check if the current state is terminal
+ pass
+ def evaluate_state(self):
+ # Evaluate the terminal states and assign scores
+ Pass
+➢ Step 2: Initialize alpha and beta values
+Set the initial alpha value to negative infinity and the initial beta value to positive infinity
+alpha = float('-inf')
+beta = float('inf')
+Step 3: Apply the Minimax algorithm with Alpha-Beta Pruning
+def alphabeta_search(game, depth, alpha, beta, maximizing_player):
+ if depth == 0 or game.is_terminal_state():
+ return game.evaluate_state()
+ if maximizing_player:
+ max_eval = float('-inf')
+ for move in game.generate_moves():
+ # Apply the move
+ game.apply_move(move)
+ eval = alphabeta_search(game, depth - 1, alpha, beta, False)
+ # Revert the move
+ game.undo_move(move)
+ max_eval = max(max_eval, eval)
+ alpha = max(alpha, eval)
+ if alpha >= beta:
+ break
+ return max_eval
+ else:
+ min_eval = float('inf')
+ for move in game.generate_moves():
+ # Apply the move
+ game.apply_move(move)
+ eval = alphabeta_search(game, depth - 1, alpha, beta, True)
+ # Revert the move
+ game.undo_move(move)
+ min_eval = min(min_eval, eval)
+ beta = min(beta, eval)
+ if alpha >= beta:
+ break
+ return min_eval
+➢ Step 4: Return the optimal move
+def get_best_move(game, depth):
+ best_score = float('-inf')
+ best_move = None
+ for move in game.generate_moves():
+ # Apply the move
+ game.apply_move(move)
+ score = alphabeta_search(game, depth - 1, alpha, beta, False)
+ # Revert the move
+ game.undo_move(move)
+ if score > best_score:
+ best_score = score
+ best_move = move
+ return best_move

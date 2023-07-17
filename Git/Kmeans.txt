@@ -1,0 +1,38 @@
+Step 1: Import Libraries
+Start by importing the necessary libraries in Python, including scikit-learn, which provides 
+the K-Means algorithm implementation.
+from sklearn.cluster import KMeans
+
+
+Step 2: Prepare the Data
+Load your dataset and preprocess it as needed. Ensure that you have numerical features, as 
+K-Means operates on numerical data.
+Step 3: Initialize and Fit the K-Means Model
+Create an instance of the KMeans class and specify the desired number of clusters (K). Then, 
+fit the model to your dataset.
+k = 3 # Number of clusters
+kmeans = KMeans(n_clusters=k)
+kmeans.fit(X)
+Step 4: Obtain Cluster Assignments
+After fitting the model, you can obtain the cluster assignments for each data point in the 
+dataset.
+cluster_labels = kmeans.labels_
+Step 5: Interpret Results
+You can analyze the obtained cluster assignments to gain insights from the data. For 
+example, you can examine the distribution of data points across clusters or visualize the 
+clusters in a scatter plot.
+# Example: Counting the number of data points in each cluster
+import numpy as np
+unique_labels, counts = np.unique(cluster_labels, return_counts=True)
+for label, count in zip(unique_labels, counts):
+print("Cluster {}: {} data points".format(label, count))
+Step 6: Visualize Clusters (Optional)
+If your data has two or three features, you can visualize the clusters in a scatter plot to gain 
+a better understanding of the clustering results.
+# Example: Visualizing clusters using matplotlib
+import matplotlib.pyplot as plt
+plt.scatter(X[:, 0], X[:, 1], c=cluster_labels)
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.title("K-Means Clustering")
+plt.show()

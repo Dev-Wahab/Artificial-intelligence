@@ -1,0 +1,41 @@
+Step 1: Import Libraries
+First, import the necessary libraries in Python, including scikit-learn, which provides the Naive Bayes 
+algorithm implementation.
+from sklearn.naive_bayes import GaussianNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+
+Step 2: Prepare the Data
+Load your dataset and split it into input features (X) and corresponding class labels (y).
+# Assuming your data is stored in a pandas DataFrame called 'data'
+X = data.drop('target', axis=1) # Features
+y = data['target'] # Class labels
+
+
+Step 3: Split the Data
+Split the dataset into training and testing sets. This allows us to train the Naive Bayes algorithm on a 
+portion of the data and evaluate its performance on the remaining unseen data.
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+test_size=0.2, random_state=42)
+
+
+Step 4: Create and Train the Naive Bayes Model
+Create an instance of the GaussianNB class, which implements the Gaussian Naive Bayes algorithm. 
+Then, train the model using the training data.
+nb = GaussianNB()
+nb.fit(X_train, y_train)
+
+
+Step 5: Make Predictions
+Use the trained Naive Bayes model to make predictions on the test set.
+y_pred = nb.predict(X_test)
+
+
+Step 6: Evaluate Accuracy
+Compare the predicted class labels (y_pred) with the true class labels (y_test) to evaluate the 
+accuracy of the Naive Bayes model.
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
+You have successfully performed classification using the Naive Bayes algorithm and calculated the 
+accuracy.

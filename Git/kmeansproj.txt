@@ -1,0 +1,44 @@
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
+from sklearn.metrics import accuracy_score, completeness_score, homogeneity_score, silhouette_score
+from sklearn.model_selection import train_test_split
+
+# Step 1: Dataset Selection:
+data = pd.read_csv("spam.csv", encoding='latin1')
+
+X_text = data["v2"]  
+y = data["v1"]  
+
+# Step 2: Data Split
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(X_text)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+# Step 3: K-Means Model Implementation
+k = 2
+kmeans = KMeans(n_clusters=k, random_state=42)
+
+# Step 4: Model Training and Testing
+kmeans.fit(X_train)
+predicted_labels = kmeans.predict(X_test)
+ 
+
+
+# Step 5: Evaluation and Parameter Printing
+silhouette_avg = silhouette_score(X_test, predicted_labels)
+
+predicted_labels_str = ['ham' if label == 0 else 'spam' for label in predicted_labels]
+
+accuracy = accuracy_score(y_test, predicted_labels_str)
+completeness = completeness_score(y_test, predicted_labels_str)
+homogeneity = homogeneity_score(y_test, predicted_labels_str)
+
+print("Silhouette Score:", silhouette_avg)
+print("Accuracy:", accuracy)
+print("Completeness:", completeness)
+print("Homogeneity:", homogeneity)
+
+

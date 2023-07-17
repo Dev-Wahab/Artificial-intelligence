@@ -1,0 +1,39 @@
+Step 1: Import Libraries
+First, import the necessary libraries in Python, including scikit-learn, which provides the KNN 
+algorithm implementation.
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+
+Step 2: Prepare the Data
+Load your dataset and split it into input features (X) and corresponding class labels (y).
+# Assuming your data is stored in a pandas DataFrame called 'data'
+X = data.drop('target', axis=1) # Features
+y = data['target'] # Class labels
+
+Step 3: Split the Data
+Split the dataset into training and testing sets. This allows us to train the KNN algorithm on a 
+portion of the data and evaluate its performance on the remaining unseen data.
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+test_size=0.2, random_state=42)
+
+
+Step 4: Create and Train the KNN Model
+Create an instance of the KNeighborsClassifier class and specify the desired value for K (the 
+number of neighbors to consider). Then, train the model using the training data.
+k = 5 # Number of neighbors
+knn = KNeighborsClassifier(n_neighbors=k)
+knn.fit(X_train, y_train)
+
+
+Step 5: Make Predictions
+Use the trained KNN model to make predictions on the test set.
+y_pred = knn.predict(X_test)
+
+
+Step 6: Evaluate Accuracy
+Compare the predicted class labels (y_pred) with the true class labels (y_test) to evaluate 
+the accuracy of the KNN model.
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)

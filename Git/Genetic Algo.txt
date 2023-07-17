@@ -1,0 +1,62 @@
+import random
+# Genetic Algorithm parameters
+population_size = 100
+chromosome_length = 20
+mutation_rate = 0.01
+num_generations = 50
+# Define the fitness function
+def fitness_function(chromosome):
+# Convert binary chromosome to decimal value
+value = int(''.join(map(str, chromosome)), 2)
+# Evaluate the fitness (maximum value of a function)
+fitness = value * value
+return fitness
+# Generate an initial population
+def generate_population():
+population = []
+
+
+for _ in range(population_size):
+chromosome = [random.randint(0, 1) for _ in
+range(chromosome_length)]
+population.append(chromosome)
+return population
+# Perform crossover between two parents
+def crossover(parent1, parent2):
+crossover_point = random.randint(0, chromosome_length - 1)
+child = parent1[:crossover_point] + parent2[crossover_point:]
+return child
+# Perform mutation on an individual
+def mutate(individual):
+for i in range(chromosome_length):
+if random.random() < mutation_rate:
+individual[i] = 1 - individual[i] # Flip the bit
+# Genetic Algorithm main loop
+def genetic_algorithm():
+population = generate_population()
+for generation in range(num_generations):
+# Evaluate fitness of each individual
+fitness_scores = [fitness_function(chromosome) for chromosome 
+in population]
+# Select parents for reproduction
+parents = random.choices(population, weights=fitness_scores, 
+k=2)
+# Create offspring through crossover
+offspring = [crossover(parents[0], parents[1]) for _ in
+range(population_size)]
+# Apply mutation to the offspring
+for individual in offspring:
+mutate(individual)
+# Replace the old population with the offspring
+population = offspring
+# Find the best individual (maximum fitness)
+best_individual = max(population, key=fitness_function)
+best_fitness = fitness_function(best_individual)
+return best_individual, best_fitness
+
+
+# Run the genetic algorithm
+best_solution, best_fitness = genetic_algorithm()
+# Print the result
+print("Best Solution:", best_solution)
+print("Best Fitness:", best_fitness)
